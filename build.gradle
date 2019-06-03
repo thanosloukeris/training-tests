@@ -1,0 +1,74 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.5.RELEASE'
+	id 'java'
+	id "org.asciidoctor.convert" version "2.2.0"
+}
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.asciidoctor.convert'
+
+group = 'training.thanos'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+ext{
+	snippetsDir = file('build/generated-snippets')
+}
+
+repositories {
+	jcenter()
+	mavenCentral()
+}
+ext{
+	junit5Version = '5.4.2'
+	junit5PlatformVersion = '1.4.2'
+	assertJversion = '3.12.2'
+	mockitoVersion = '2.27.0'
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5Version"
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit5Version"
+	testCompile "org.junit.vintage:junit-vintage-engine:$junit5Version"
+	testCompile "org.junit.jupiter:junit-jupiter-params:$junit5Version"
+	testCompile "org.junit.platform:junit-platform-launcher:$junit5PlatformVersion"
+	compile "org.junit.platform:junit-platform-commons:$junit5PlatformVersion"
+	testCompile "org.assertj:assertj-core:$assertJversion"
+	testCompile "org.mockito:mockito-core:$mockitoVersion"
+	testCompile "org.mockito:mockito-junit-jupiter:$mockitoVersion"
+	testCompile("org.springframework.boot:spring-boot-starter-test")
+	asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.3.RELEASE'
+	testCompile 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.3.RELEASE'
+}
+
+test {
+	useJUnitPlatform {
+	}
+	outputs.dir snippetsDir
+}
+
+asciidoctor {
+	inputs.dir snippetsDir
+	dependsOn test
+}
+
+jar{
+	dependsOn asciidoctor
+	from("${asciidoctor.outputDir}/html5"){
+		into 'static/docs'
+	}
+}

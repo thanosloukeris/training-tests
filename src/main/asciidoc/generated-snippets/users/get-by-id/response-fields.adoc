@@ -1,0 +1,16 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+Number+`
+|Unique identifier of the User.
+
+|`+name+`
+|`+String+`
+|First Name of the User.
+
+|`+lastName+`
+|`+String+`
+|last name of the user.
+
+|===

@@ -1,0 +1,8 @@
+.+/users/{id}+
+|===
+|Parameter|Description
+
+|`+id+`
+|Identifier of the person to be obtained.
+
+|===

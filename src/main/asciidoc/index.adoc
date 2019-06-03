@@ -1,0 +1,25 @@
+= Sample Api Documentation
+:Thanos Loukeris<gamwtonvasili@gmail.com>1.0.0, 30/5/2018
+:toc: left
+:sectnums:
+
+== Introduction
+this is allalalallalala
+
+== test
+test
+
+==== Sample Request
+include::generated-snippets/users/get-by-id/http-request.adoc[]
+
+==== Sample Response
+include::generated-snippets/users/get-by-id/http-response.adoc[]
+
+==== CURL sample
+include::generated-snippets/users/get-by-id/curl-request.adoc[]
+
+==== Sample path parameters
+include::generated-snippets/users/get-by-id/path-parameters.adoc[]
+
+==== Sample response fields parameters
+include::generated-snippets/users/get-by-id/response-fields.adoc[]
